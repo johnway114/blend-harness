@@ -1,0 +1,21 @@
+blend --json validate-config .
+blend --json trust .
+blend --json build . --trust --operation-id reference-brand-build
+blend --json preview . --profile preview --variant amber --trust --operation-id reference-brand-preview
+blend --json inspect . --profile final --variant square-amber --trust --operation-id reference-brand-inspect
+blend --json validate . --profile final --variant square-amber --trust --operation-id reference-brand-validate-square
+blend --json validate . --profile final --variant vertical-ivory --trust --operation-id reference-brand-validate-vertical
+blend --json validate . --profile final --variant landscape-oxide --trust --operation-id reference-brand-validate-landscape
+blend --json plan . --matrix delivery --target render --operation-id reference-brand-plan
+blend --json render . --matrix delivery --trust --operation-id reference-brand-delivery
+blend --json validate . --profile transparent --variant transparent-amber --trust --operation-id reference-brand-validate-transparent
+blend --json validate . --profile transparent --variant square-amber --trust --operation-id reference-brand-validate-square-transparent
+blend --json plan . --matrix multi-profile --target render --operation-id reference-brand-multi-profile-plan
+blend --json render . --matrix multi-profile --trust --operation-id reference-brand-render-multi-profile
+blend --json render . --profile transparent --variant transparent-amber --trust --operation-id reference-brand-render-transparent
+blend --json encode . --output square-film --operation-id reference-brand-square
+blend --json encode . --output square-master --operation-id reference-brand-master
+blend --json encode . --output vertical-film --operation-id reference-brand-vertical
+blend --json encode . --output landscape-film --operation-id reference-brand-landscape
+blend --json encode . --output transparent-mark --operation-id reference-brand-transparent
+blend --json review . --operation-id reference-brand-review

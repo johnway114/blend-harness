@@ -1,0 +1,62 @@
+schema: 1
+id: empty-scene
+template:
+  id: empty
+  version: 1
+blender:
+  minimumVersion: "4.5"
+  maximumVersionExclusive: "6.0"
+  factoryStartup: true
+  offline: true
+entrypoint: scene.py
+brief: brief.json
+project:
+  frameRate: 24
+  frameStart: 1
+  frameEnd: 1
+  seed: 1
+  units: METRIC
+  unitScale: 1.0
+  colorManagement:
+    display: sRGB
+    view: AgX
+    look: Medium High Contrast
+profiles:
+  preview:
+    engine: BLENDER_EEVEE_NEXT
+    width: 256
+    height: 256
+    samples: 8
+    format: PNG
+    colorMode: RGB
+    final: false
+  final:
+    engine: BLENDER_EEVEE_NEXT
+    width: 512
+    height: 512
+    samples: 32
+    format: PNG
+    colorMode: RGB
+    final: true
+previewFrames: [1]
+previewModes: [material]
+variants: {}
+outputs: []
+exports: []
+assets: []
+policies:
+  promote: []
+  suppress: []
+  requireAppliedScale: false
+  requireClosedMeshes: false
+  requireStableNames: true
+resources:
+  maxProcesses: 1
+  maxMemoryMB: 4096
+  maxDiskBytes: 1073741824
+  maxResolutionPixels: 2000000
+  maxSamples: 256
+  maxFrames: 1000
+  timeoutSeconds: 180
+  thermalAdvisory: true
+nondeterminism: []

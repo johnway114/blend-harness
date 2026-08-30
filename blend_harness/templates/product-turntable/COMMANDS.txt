@@ -1,0 +1,13 @@
+blend --json validate-config .
+blend --json trust .
+blend --json build . --trust --operation-id reference-product-build
+blend --json bake . --simulation product-settle --profile preview-settle --trust --operation-id reference-product-bake-preview
+blend --json preview . --profile preview --variant graphite --trust --operation-id reference-product-preview
+blend --json bake . --simulation product-settle --profile final-settle --trust --operation-id reference-product-bake-final
+blend --json inspect . --profile final --variant graphite --trust --operation-id reference-product-inspect
+blend --json validate . --profile final --variant graphite --trust --operation-id reference-product-validate
+blend --json render . --profile final --variant graphite --trust --operation-id reference-product-render
+blend --json encode . --output turntable-film --operation-id reference-product-film
+blend --json encode . --output hero-still --operation-id reference-product-still
+blend --json export . --profile final --variant graphite --trust --operation-id reference-product-export
+blend --json review . --operation-id reference-product-review

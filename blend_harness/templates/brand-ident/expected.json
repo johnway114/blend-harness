@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "project": "brand-ident",
+  "inspection": {
+    "requiredObjects": ["surface", "mark-spine", "mark-upper", "mark-lower", "hero", "detail"],
+    "minimumObjects": 9,
+    "minimumTriangles": 40,
+    "requiredCameras": ["hero", "detail"]
+  },
+  "validation": {
+    "profile": "final",
+    "variant": "square-amber",
+    "passed": true,
+    "requiredRuleIds": []
+  },
+  "outputs": [
+    "output/brand-ident-square.mp4",
+    "output/brand-ident-square-master.mov",
+    "output/brand-ident-vertical.mp4",
+    "output/brand-ident-landscape.mp4",
+    "output/brand-ident-transparent.png"
+  ],
+  "commands": [
+    "blend build . --trust",
+    "blend preview . --profile preview --variant amber --trust",
+    "blend inspect . --profile final --variant square-amber --trust",
+    "blend validate . --profile final --variant square-amber --trust",
+    "blend render . --matrix delivery --trust",
+    "blend encode ."
+  ],
+  "visualBaseline": "references/baselines/contact-sheet.png"
+}

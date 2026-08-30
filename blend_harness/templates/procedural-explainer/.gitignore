@@ -1,0 +1,7 @@
+.blend-trust.json
+__pycache__/
+build/
+previews/
+renders/
+output/
+*.blend1

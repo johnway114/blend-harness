@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blend.local/schemas/library-v1.json",
+  "title": "Blend reusable project library",
+  "type": "object",
+  "required": ["schema", "id", "version", "contents", "assets"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": 1},
+    "id": {"type": "string"},
+    "version": {"type": "string"},
+    "contents": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "python": {"type": "array", "items": {"type": "string"}},
+        "materials": {"type": "array", "items": {"type": "string"}},
+        "nodeGroups": {"type": "array", "items": {"type": "string"}},
+        "lightingRigs": {"type": "array", "items": {"type": "string"}},
+        "cameras": {"type": "array", "items": {"type": "string"}},
+        "compositor": {"type": "array", "items": {"type": "string"}},
+        "policies": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "checksum"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string"},
+          "path": {"type": "string"},
+          "checksum": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+          "license": {"type": "string"},
+          "units": {"type": "string"},
+          "coordinateSystem": {"type": "string"},
+          "colorSpace": {"type": "string"}
+        }
+      }
+    }
+  }
+}

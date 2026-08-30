@@ -1,0 +1,8 @@
+# Blend fixture material, CC0-1.0
+newmtl ProductMat
+Ka 0.02 0.02 0.02
+Kd 0.18 0.22 0.28
+Ks 0.55 0.55 0.55
+Ns 180.0
+d 1.0
+illum 2

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "updated": "2026-08-30",
+  "lines": [
+    {
+      "line": "4.5 LTS",
+      "minimum": "4.5.0",
+      "maximumExclusive": "5.0.0",
+      "status": "supported",
+      "python": "3.11",
+      "notes": ["Long-term support line", "Workbench identifier compatibility is runtime-detected"]
+    },
+    {
+      "line": "5.2 stable",
+      "minimum": "5.2.0",
+      "maximumExclusive": "5.3.0",
+      "status": "supported",
+      "python": "3.13",
+      "notes": ["Current stable line", "Conformance reference: 5.2.1 on Apple Silicon"]
+    }
+  ],
+  "structuralReproducibility": "Normalized manifests and evaluated scene facts are exact within a supported line.",
+  "pixelReproducibility": "Declared tolerances apply on the same reference device and Blender build; cross-device bit identity is not promised."
+}

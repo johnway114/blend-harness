@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "project": "product-turntable",
+  "inspection": {
+    "requiredObjects": ["product-body", "product-turntable", "hero", "detail"],
+    "minimumObjects": 8,
+    "minimumTriangles": 12,
+    "requiredCameras": ["hero", "detail"]
+  },
+  "validation": {
+    "profile": "final",
+    "variant": "graphite",
+    "passed": true,
+    "requiredRuleIds": []
+  },
+  "outputs": [
+    "output/product-turntable.mp4",
+    "output/product-hero.png",
+    "output/product.glb",
+    "output/product.usdc",
+    "output/product.fbx",
+    "output/product.obj",
+    "output/product.abc",
+    "output/product.stl"
+  ],
+  "commands": [
+    "blend build . --trust",
+    "blend bake . --simulation product-settle --profile final-settle --trust",
+    "blend preview . --profile preview --variant graphite --trust",
+    "blend validate . --profile final --variant graphite --trust",
+    "blend render . --profile final --variant graphite --trust",
+    "blend encode . --output hero-still",
+    "blend export . --profile final --variant graphite --trust"
+  ],
+  "visualBaseline": "references/baselines/contact-sheet.png"
+}

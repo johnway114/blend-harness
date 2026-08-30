@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "title": "Material recovery",
+  "unit": "percent",
+  "series": [
+    {"label": "Reuse", "value": 28},
+    {"label": "Fiber", "value": 44},
+    {"label": "Energy", "value": 18}
+  ]
+}

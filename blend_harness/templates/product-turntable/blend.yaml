@@ -1,0 +1,262 @@
+schema: 1
+id: product-turntable
+template:
+  id: product-turntable
+  version: 1
+blender:
+  minimumVersion: "4.5"
+  maximumVersionExclusive: "6.0"
+  factoryStartup: true
+  offline: true
+entrypoint: scene.py
+brief: brief.json
+project:
+  frameRate: 24
+  frameStart: 1
+  frameEnd: 24
+  seed: 1907
+  units: METRIC
+  unitScale: 1.0
+  heroObjects: [product-body]
+  colorManagement:
+    display: sRGB
+    view: AgX
+    look: Medium High Contrast
+profiles:
+  preview:
+    engine: BLENDER_EEVEE_NEXT
+    width: 256
+    height: 256
+    samples: 8
+    format: PNG
+    colorMode: RGB
+    simulationProfile: preview-settle
+    final: false
+  final:
+    engine: BLENDER_EEVEE_NEXT
+    width: 384
+    height: 384
+    samples: 24
+    format: PNG
+    colorMode: RGB
+    simulationProfile: final-settle
+    final: true
+simulationProfiles:
+  preview-settle:
+    quality: preview
+    solverSteps: 1
+  final-settle:
+    quality: final
+    solverSteps: 4
+simulations:
+  - id: product-settle
+    type: custom
+    dependencies: [scene.py, assets/models/product.obj]
+    cacheRoot: product-settle
+    frameStart: 1
+    frameEnd: 24
+    deterministic: true
+    seed: 1907
+    expectedFiles: [blend-cache-complete.json]
+    previewProfile: preview-settle
+    finalProfile: final-settle
+views:
+  - id: hero
+    camera: hero
+    subjects: [product-body]
+    framing:
+      minimumCoverage: 0.08
+      maximumCoverage: 0.75
+      requireFullyVisible: true
+  - id: detail
+    camera: detail
+    subjects: [product-body]
+    framing:
+      minimumCoverage: 0.12
+      maximumCoverage: 0.95
+  - id: front
+    generated: front
+    subjects: [product-body]
+    framing:
+      requireFullyVisible: true
+previewFrames: [1, 7, 13, 19, 24]
+previewModes: [material]
+variants:
+  graphite:
+    parameters:
+      productColor: [0.055, 0.075, 0.11, 1.0]
+      backdrop: [0.025, 0.028, 0.033, 1.0]
+  sand:
+    parameters:
+      productColor: [0.38, 0.24, 0.12, 1.0]
+      backdrop: [0.12, 0.095, 0.07, 1.0]
+  pearl:
+    parameters:
+      productColor: [0.56, 0.53, 0.47, 1.0]
+      backdrop: [0.055, 0.06, 0.067, 1.0]
+matrices:
+  finishes:
+    variants: [graphite, sand, pearl]
+    profiles: [final]
+    concurrency: 1
+outputs:
+  - id: turntable-film
+    variant: graphite
+    profile: final
+    type: video
+    codec: h264
+    finalHoldSeconds: 0.125
+    path: output/product-turntable.mp4
+  - id: hero-still
+    variant: graphite
+    profile: final
+    type: still
+    frame: 21
+    path: output/product-hero.png
+exports:
+  - id: web-model
+    format: glb
+    path: output/product.glb
+    includeCollections: [product]
+    applyTransforms: true
+    applyModifiers: true
+    triangulate: true
+    materials: true
+    packageTextures: true
+    animations: false
+    cameras: false
+    lights: false
+    customProperties: true
+    requireManifold: true
+    limits:
+      maxTriangles: 10000
+      maxVertices: 10000
+      maxObjects: 4
+      maxMaterials: 4
+    optimize:
+      decimateRatio: 1.0
+      weldDistance: 0.00001
+  - id: usd-model
+    format: usdc
+    path: output/product.usdc
+    includeCollections: [product]
+    applyTransforms: true
+    applyModifiers: true
+    triangulate: false
+    materials: true
+    packageTextures: false
+    animations: false
+    cameras: false
+    lights: false
+    customProperties: true
+    requireManifold: true
+  - id: fbx-model
+    format: fbx
+    path: output/product.fbx
+    includeCollections: [product]
+    applyTransforms: true
+    applyModifiers: true
+    triangulate: true
+    materials: true
+    packageTextures: false
+    animations: false
+    cameras: false
+    lights: false
+    customProperties: false
+    requireManifold: true
+  - id: obj-model
+    format: obj
+    path: output/product.obj
+    includeCollections: [product]
+    applyTransforms: true
+    applyModifiers: true
+    triangulate: true
+    materials: true
+    packageTextures: false
+    animations: false
+    cameras: false
+    lights: false
+    customProperties: false
+    requireManifold: true
+  - id: alembic-model
+    format: abc
+    path: output/product.abc
+    includeCollections: [product]
+    applyTransforms: true
+    applyModifiers: true
+    triangulate: false
+    materials: false
+    packageTextures: false
+    animations: true
+    cameras: false
+    lights: false
+    customProperties: false
+    requireManifold: true
+  - id: stl-model
+    format: stl
+    path: output/product.stl
+    includeCollections: [product]
+    units: METRIC
+    scale: 1.0
+    applyTransforms: true
+    applyModifiers: true
+    triangulate: true
+    materials: false
+    packageTextures: false
+    animations: false
+    cameras: false
+    lights: false
+    customProperties: false
+    requireManifold: true
+catalogs:
+  - id: product-catalog
+    path: assets/catalog.json
+    checksum: 9c3f7098a23b7c5e4c3016d9b6c4db7d811bfba3b4b320a64c56faeb6decdf63
+assets:
+  - id: product-model
+    type: model
+    catalog: product-catalog
+    version: 1.0.0
+  - id: product-material-source
+    type: other
+    path: assets/models/product.mtl
+    checksum: 80420dc8b9a2ab6de443cfaafaebf59a31d2a079475b5c00415e58c9e241fa7f
+    license: CC0-1.0
+policies:
+  promote: []
+  suppress: []
+  requireAppliedScale: true
+  requireClosedMeshes: false
+  requireStableNames: true
+resources:
+  maxProcesses: 1
+  maxMemoryMB: 4096
+  maxDiskBytes: 1073741824
+  maxResolutionPixels: 1000000
+  maxSamples: 128
+  maxFrames: 240
+  maxTriangles: 500000
+  maxObjects: 200
+  maxTextureBytes: 268435456
+  timeoutSeconds: 240
+  thermalAdvisory: true
+searches:
+  hero-angle:
+    baseVariant: graphite
+    parameters:
+      cameraAzimuth: [-0.25, 0.0, 0.25]
+      fillEnergy: [180, 280]
+    budget: 6
+    profile: preview
+    view: hero
+    scores:
+      - id: subject-coverage
+        metric: coverage
+        direction: target
+        target: 0.45
+        weight: 2
+      - id: render-cost
+        metric: renderSeconds
+        direction: minimize
+        weight: 1
+nondeterminism: []

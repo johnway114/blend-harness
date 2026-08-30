@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "title": "Restrained engraved identity",
+  "purpose": "Executable acceptance fixture and reusable brand ident",
+  "durationSeconds": 1,
+  "creativeDirection": [
+    "warm near-black surface",
+    "precise inset geometric mark",
+    "amber light reveals form",
+    "restrained camera movement"
+  ],
+  "avoid": [
+    "fantasy runes",
+    "excessive particles",
+    "neon glow",
+    "generic cinematic fog"
+  ],
+  "deliverables": [
+    "square animation",
+    "vertical animation",
+    "landscape animation",
+    "transparent still mark"
+  ],
+  "acceptance": [
+    "mark remains legible at mobile size",
+    "first meaningful movement begins within 500 ms",
+    "final frame reads as a stable resolved identity"
+  ],
+  "mechanicalAcceptance": [
+    {"id": "timeline-duration", "measurement": "durationSeconds", "operator": "gte", "value": 1},
+    {"id": "subject-visible", "measurement": "heroCoverage", "operator": "gte", "value": 0.05}
+  ],
+  "constraints": ["No external assets or GUI-authored state", "All variants share one source scene"]
+}

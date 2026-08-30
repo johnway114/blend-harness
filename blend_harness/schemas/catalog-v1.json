@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blend.local/schemas/catalog-v1.json",
+  "title": "Blend filesystem asset catalog",
+  "type": "object",
+  "required": ["schema", "id", "assets"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": 1},
+    "id": {"type": "string"},
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "version", "path", "checksum", "license"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string"},
+          "version": {"type": "string"},
+          "path": {"type": "string"},
+          "source": {"type": "string"},
+          "license": {"type": "string"},
+          "checksum": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+          "units": {"type": "string"},
+          "coordinateSystem": {"type": "string"},
+          "colorSpace": {"type": "string"},
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {"type": "string"},
+                {
+                  "type": "object",
+                  "required": ["path", "checksum"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": {"type": "string"},
+                    "checksum": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"}
+                  }
+                }
+              ]
+            }
+          },
+          "preview": {"type": "string"}
+        }
+      }
+    }
+  }
+}

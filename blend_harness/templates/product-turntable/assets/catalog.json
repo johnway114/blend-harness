@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "id": "product-catalog",
+  "assets": [
+    {
+      "id": "product-model",
+      "version": "1.0.0",
+      "path": "models/product.obj",
+      "source": "Blend redistributable acceptance fixture",
+      "license": "CC0-1.0",
+      "checksum": "891c29e8830230152e8d22b12675e0767f42439585847078dc1a407f075ec8c6",
+      "units": "METRIC",
+      "coordinateSystem": "Z_UP_RIGHT_HANDED",
+      "dependencies": [
+        {
+          "path": "models/product.mtl",
+          "checksum": "80420dc8b9a2ab6de443cfaafaebf59a31d2a079475b5c00415e58c9e241fa7f"
+        }
+      ]
+    }
+  ]
+}

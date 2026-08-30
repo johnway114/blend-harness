@@ -1,0 +1,65 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  host:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ['3.11', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m compileall -q blend_harness blend_runtime
+      - run: pytest -m 'not blender and not ffmpeg and not slow'
+      - name: Installer and uninstaller conformance
+        env:
+          BLEND_PREFIX: ${{ runner.temp }}/blend-prefix
+        run: |
+          ./scripts/install.sh
+          "$BLEND_PREFIX/bin/blend" --json validate-config blend_harness/templates/empty
+          ./scripts/uninstall.sh
+          test ! -e "$BLEND_PREFIX/bin/blend"
+
+  blender-linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        blender: ['4.5.3', '5.2.1']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg libx11-6 libxi6 libxrender1 libxfixes3 libxxf86vm1 libxkbcommon0 libsm6 libice6
+      - name: Install Blender
+        run: |
+          version='${{ matrix.blender }}'
+          series="${version%.*}"
+          archive="blender-$version-linux-x64.tar.xz"
+          curl --fail --location --retry 3 "https://download.blender.org/release/Blender$series/$archive" --output "$RUNNER_TEMP/$archive"
+          tar -xf "$RUNNER_TEMP/$archive" -C "$RUNNER_TEMP"
+          printf 'BLENDER_BIN=%s\n' "$RUNNER_TEMP/blender-$version-linux-x64/blender" >> "$GITHUB_ENV"
+      - run: python -m pip install -e '.[dev]'
+      - run: pytest -m 'blender or ffmpeg' --maxfail=1
+
+  blender-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: brew install --cask blender && brew install ffmpeg
+      - run: printf 'BLENDER_BIN=/Applications/Blender.app/Contents/MacOS/Blender\n' >> "$GITHUB_ENV"
+      - run: python -m pip install -e '.[dev]'
+      - run: pytest -m 'blender or ffmpeg' --maxfail=1

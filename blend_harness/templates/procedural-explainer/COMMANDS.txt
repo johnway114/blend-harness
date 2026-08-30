@@ -1,0 +1,13 @@
+blend --json validate-config .
+blend --json trust .
+blend --json build . --trust --operation-id reference-explainer-build
+blend --json preview . --profile preview --variant revision-a --trust --operation-id reference-explainer-preview-a
+blend --json preview . --profile preview --variant revision-b --trust --operation-id reference-explainer-preview-b
+blend --json inspect . --profile final --variant revision-b --trust --operation-id reference-explainer-inspect
+blend --json validate . --profile final --variant revision-a --trust --operation-id reference-explainer-validate-a
+blend --json validate . --profile final --variant revision-b --trust --operation-id reference-explainer-validate-b
+blend --json render . --matrix data-revisions --trust --operation-id reference-explainer-matrix
+blend --json encode . --output revision-a-film --operation-id reference-explainer-film-a
+blend --json encode . --output revision-b-film --operation-id reference-explainer-film-b
+blend --json compare previews/reference-explainer-preview-a previews/reference-explainer-preview-b --operation-id reference-explainer-compare
+blend --json review . --operation-id reference-explainer-review

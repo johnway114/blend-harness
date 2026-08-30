@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blend.local/schemas/brief-v1.json",
+  "title": "Blend creative brief",
+  "type": "object",
+  "required": ["schema", "title", "purpose", "creativeDirection", "avoid", "deliverables", "acceptance"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": 1},
+    "title": {"type": "string", "minLength": 1},
+    "purpose": {"type": "string", "minLength": 1},
+    "durationSeconds": {"type": "number", "exclusiveMinimum": 0},
+    "creativeDirection": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "avoid": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "deliverables": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+    "acceptance": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "mechanicalAcceptance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "measurement", "operator", "value"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string"},
+          "measurement": {"type": "string"},
+          "operator": {"enum": ["eq", "ne", "lt", "lte", "gt", "gte"]},
+          "value": {"type": ["number", "string", "boolean"]},
+          "scope": {"type": "string"}
+        }
+      }
+    },
+    "references": {"type": "array", "items": {"type": "string"}},
+    "constraints": {"type": "array", "items": {"type": "string"}},
+    "reviewNotes": {"type": "array", "items": {"type": "string"}}
+  }
+}

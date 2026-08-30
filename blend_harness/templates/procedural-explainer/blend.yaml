@@ -1,0 +1,159 @@
+schema: 1
+id: procedural-explainer
+template:
+  id: procedural-explainer
+  version: 1
+blender:
+  minimumVersion: "4.5"
+  maximumVersionExclusive: "6.0"
+  factoryStartup: true
+  offline: true
+entrypoint: scene.py
+brief: brief.json
+project:
+  frameRate: 24
+  frameStart: 1
+  frameEnd: 24
+  seed: 7719
+  units: METRIC
+  unitScale: 1.0
+  heroObjects: [bar-reuse]
+  colorManagement:
+    display: sRGB
+    view: AgX
+    look: Medium High Contrast
+profiles:
+  preview:
+    engine: BLENDER_EEVEE_NEXT
+    width: 320
+    height: 240
+    samples: 8
+    format: PNG
+    colorMode: RGB
+    final: false
+  final:
+    engine: BLENDER_EEVEE_NEXT
+    width: 480
+    height: 360
+    samples: 24
+    format: PNG
+    colorMode: RGB
+    final: true
+views:
+  - id: hero
+    camera: hero
+    subjects: [bar-reuse, bar-fiber, bar-energy]
+    framing:
+      minimumCoverage: 0.1
+      maximumCoverage: 0.9
+      requireFullyVisible: true
+      titleSafe: 0.03
+  - id: front
+    generated: front
+    subjects: [bar-reuse, bar-fiber, bar-energy]
+    framing:
+      requireFullyVisible: true
+  - id: top
+    generated: top
+    subjects: [bar-reuse, bar-fiber, bar-energy]
+previewFrames: [1, 8, 16, 24]
+previewModes: [material]
+variants:
+  revision-a:
+    dataSource: assets/data/revision-a.json
+    parameters:
+      dataAsset: data-revision-a
+      gap: 1.25
+      palette: warm
+  revision-b:
+    dataSource: assets/data/revision-b.json
+    parameters:
+      dataAsset: data-revision-b
+      gap: 1.25
+      palette: cool
+  revision-b-wide:
+    extends: revision-b
+    width: 640
+    height: 360
+    parameters:
+      gap: 1.55
+matrices:
+  data-revisions:
+    variants: [revision-a, revision-b]
+    profiles: [final]
+    concurrency: 1
+outputs:
+  - id: revision-a-film
+    variant: revision-a
+    profile: final
+    type: video
+    codec: h264
+    finalHoldSeconds: 0.125
+    path: output/explainer-revision-a.mp4
+  - id: revision-b-film
+    variant: revision-b
+    profile: final
+    type: video
+    codec: h264
+    finalHoldSeconds: 0.125
+    path: output/explainer-revision-b.mp4
+assets:
+  - id: data-revision-a
+    type: data
+    path: assets/data/revision-a.json
+    checksum: 5c9e42d805d481e5e3a4eaadd2122ddea030310946cf783e1f7415c4fe0f08b4
+    license: CC0-1.0
+  - id: data-revision-b
+    type: data
+    path: assets/data/revision-b.json
+    checksum: 45e1bdccc8ca876365e420975b42650d254163977f9c5e0cb2c0610ee973f0d9
+    license: CC0-1.0
+  - id: label-font
+    type: font
+    path: assets/fonts/Lato-Regular.ttf
+    checksum: e204e9ca2b6622d68dfefe0127c22dc22f2624a6b77416c2de8afb5ef5e71374
+    license: OFL-1.1
+    fontLicenseMetadata: assets/fonts/OFL.txt
+  - id: label-font-license
+    type: other
+    path: assets/fonts/OFL.txt
+    checksum: 71c8d3a82af3f9c5d65aebe762cce3c8f5650fa6d52dc992d9e9f6c1755d0afa
+    license: OFL-1.1
+policies:
+  promote: []
+  suppress: []
+  requireAppliedScale: false
+  requireClosedMeshes: false
+  requireStableNames: true
+resources:
+  maxProcesses: 1
+  maxMemoryMB: 4096
+  maxDiskBytes: 1073741824
+  maxResolutionPixels: 1000000
+  maxSamples: 128
+  maxFrames: 240
+  maxTriangles: 500000
+  maxObjects: 300
+  maxTextureBytes: 268435456
+  timeoutSeconds: 180
+  thermalAdvisory: true
+searches:
+  layout:
+    baseVariant: revision-b
+    parameters:
+      gap: [1.0, 1.25, 1.5]
+      cameraHeight: [3.6, 4.2]
+    budget: 6
+    profile: preview
+    view: hero
+    scores:
+      - id: diagram-coverage
+        metric: coverage
+        direction: target
+        target: 0.55
+        weight: 2
+      - id: object-budget
+        metric: objectCount
+        direction: minimize
+        weight: 0.25
+nondeterminism: []

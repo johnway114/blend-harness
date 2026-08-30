@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blend.local/schemas/result-v1.json",
+  "title": "Blend command result",
+  "type": "object",
+  "required": ["schema", "operation", "operationId", "status", "startedAt", "endedAt", "durationSeconds", "artifacts", "warnings", "nextActions"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": 1},
+    "operation": {"type": "string"},
+    "operationId": {"type": "string"},
+    "project": {"type": ["string", "null"]},
+    "status": {"enum": ["succeeded", "failed", "interrupted", "partial"]},
+    "startedAt": {"type": "string"},
+    "endedAt": {"type": "string"},
+    "durationSeconds": {"type": "number", "minimum": 0},
+    "summary": {"type": "string"},
+    "data": {"type": "object"},
+    "artifacts": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": ["string", "object"]}},
+    "nextActions": {"type": "array", "items": {"type": "string"}},
+    "progress": {"type": "object"},
+    "error": {"type": ["object", "null"]}
+  }
+}

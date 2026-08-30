@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "brand-rig",
+  "version": "1.0.0",
+  "contents": {
+    "python": [
+      "python/brand_rig.py"
+    ]
+  },
+  "assets": [
+    {
+      "id": "brand-palette",
+      "path": "assets/palette.json",
+      "checksum": "a79bda8654c5451909306af15b06f1ad64ff584260fc65ade149f3cf75ec8288",
+      "license": "CC0-1.0",
+      "colorSpace": "linear"
+    }
+  ]
+}

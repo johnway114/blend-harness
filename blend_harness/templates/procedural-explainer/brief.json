@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "title": "Deterministic material-recovery explainer",
+  "purpose": "Acceptance fixture for external data, labels, procedural layout, animation, and revision comparison",
+  "durationSeconds": 1,
+  "creativeDirection": [
+    "diagrammatic geometry",
+    "warm editorial labels",
+    "calm sequential reveal",
+    "data remains primary"
+  ],
+  "avoid": ["decorative chart junk", "misleading area encodings", "randomized layout", "unreadable labels"],
+  "deliverables": ["revision A animation", "revision B animation", "structural and visual comparison"],
+  "acceptance": [
+    "the same data revision produces the same layout",
+    "labels identify every category and value",
+    "the comparison exposes data-driven structural and visual changes"
+  ],
+  "mechanicalAcceptance": [
+    {"id": "category-count", "measurement": "heroObjectCount", "operator": "eq", "value": 3},
+    {"id": "duration", "measurement": "durationSeconds", "operator": "gte", "value": 1}
+  ],
+  "constraints": ["Consume only declared JSON data", "Use Blender built-in Bfont", "No GUI-authored state"]
+}

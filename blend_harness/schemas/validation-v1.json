@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blend.local/schemas/validation-v1.json",
+  "title": "Blend validation report",
+  "type": "object",
+  "required": ["schema", "project", "profile", "variant", "createdAt", "dependencyHash", "summary", "findings", "mechanicalOnly"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": 1},
+    "project": {"type": "string"},
+    "profile": {"type": ["string", "null"]},
+    "variant": {"type": ["string", "null"]},
+    "createdAt": {"type": "string"},
+    "dependencyHash": {"type": "string"},
+    "summary": {
+      "type": "object",
+      "required": ["errors", "warnings", "info", "passed"],
+      "additionalProperties": false,
+      "properties": {
+        "errors": {"type": "integer", "minimum": 0},
+        "warnings": {"type": "integer", "minimum": 0},
+        "info": {"type": "integer", "minimum": 0},
+        "passed": {"type": "boolean"}
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ruleId", "severity", "message", "evidence", "remediation", "suppressed"],
+        "additionalProperties": false,
+        "properties": {
+          "ruleId": {"type": "string"},
+          "severity": {"enum": ["error", "warning", "info"]},
+          "message": {"type": "string"},
+          "evidence": {"type": "object"},
+          "remediation": {"type": "string"},
+          "scope": {"type": "string"},
+          "suppressed": {"type": "boolean"},
+          "suppressionReason": {"type": "string"},
+          "originalSeverity": {"enum": ["error", "warning", "info"]}
+        }
+      }
+    },
+    "mechanicalOnly": {"const": true},
+    "visualReviewStatements": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blend.local/schemas/cache-manifest-v1.json",
+  "title": "Blend simulation cache manifest",
+  "type": "object",
+  "required": ["schema", "simulation", "project", "dependencyHash", "runtimeVersion", "runtimeHash", "blenderVersion", "frameStart", "frameEnd", "deterministic", "outputs", "status", "timing"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": 1},
+    "simulation": {"type": "string"},
+    "project": {"type": "string"},
+    "dependencyHash": {"type": "string"},
+    "runtimeVersion": {"type": "string"},
+    "runtimeHash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "settings": {"type": "object"},
+    "sources": {"type": "array", "items": {"type": "object"}},
+    "simulationProfile": {"type": ["string", "null"]},
+    "simulationProfileSettings": {"type": "object"},
+    "blenderVersion": {"type": "string"},
+    "frameStart": {"type": "integer"},
+    "frameEnd": {"type": "integer"},
+    "seed": {"type": ["integer", "null"]},
+    "deterministic": {"type": "boolean"},
+    "nondeterminism": {"type": "array", "items": {"type": "object"}},
+    "outputs": {"type": "array", "items": {"type": "object"}},
+    "status": {"enum": ["complete", "partial", "failed", "interrupted", "stale"]},
+    "timing": {"type": "object"}
+  }
+}

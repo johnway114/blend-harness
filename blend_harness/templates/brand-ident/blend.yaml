@@ -1,0 +1,213 @@
+schema: 1
+id: brand-ident
+template:
+  id: brand-ident
+  version: 1
+blender:
+  minimumVersion: "4.5"
+  maximumVersionExclusive: "6.0"
+  factoryStartup: true
+  offline: true
+entrypoint: scene.py
+brief: brief.json
+project:
+  frameRate: 24
+  frameStart: 1
+  frameEnd: 24
+  seed: 41027
+  units: METRIC
+  unitScale: 1.0
+  heroObjects: [mark-spine]
+  colorManagement:
+    display: sRGB
+    view: AgX
+    look: Medium High Contrast
+profiles:
+  preview:
+    engine: BLENDER_EEVEE_NEXT
+    width: 256
+    height: 256
+    percentage: 100
+    samples: 8
+    format: PNG
+    colorMode: RGB
+    transparent: false
+    final: false
+  final:
+    engine: BLENDER_EEVEE_NEXT
+    width: 384
+    height: 384
+    percentage: 100
+    samples: 24
+    format: PNG
+    colorMode: RGB
+    transparent: false
+    final: true
+  transparent:
+    engine: BLENDER_EEVEE_NEXT
+    width: 384
+    height: 384
+    percentage: 100
+    samples: 24
+    format: PNG
+    colorMode: RGBA
+    transparent: true
+    final: true
+views:
+  - id: hero
+    camera: hero
+    subjects: [mark-spine]
+    framing:
+      minimumCoverage: 0.05
+      maximumCoverage: 0.8
+      requireFullyVisible: true
+      subjectSafe: 0.04
+  - id: detail
+    camera: detail
+    subjects: [mark-spine]
+    framing:
+      minimumCoverage: 0.05
+      maximumCoverage: 0.95
+  - id: top
+    generated: top
+    subjects: [mark-spine, mark-upper, mark-lower]
+    framing:
+      requireFullyVisible: true
+previewFrames: [1, 8, 16, 24]
+previewModes: [material]
+variants:
+  amber:
+    palette: amber
+    parameters:
+      accent: [1.0, 0.28, 0.035, 1.0]
+      plate: [0.012, 0.009, 0.007, 1.0]
+      lightEnergy: 900
+  ivory:
+    palette: ivory
+    parameters:
+      accent: [0.72, 0.58, 0.37, 1.0]
+      plate: [0.025, 0.022, 0.017, 1.0]
+      lightEnergy: 700
+  oxide:
+    palette: oxide
+    parameters:
+      accent: [0.35, 0.12, 0.055, 1.0]
+      plate: [0.008, 0.012, 0.013, 1.0]
+      lightEnergy: 1100
+  square-amber:
+    extends: amber
+    profile: final
+    width: 384
+    height: 384
+  vertical-ivory:
+    extends: ivory
+    profile: final
+    width: 216
+    height: 384
+  landscape-oxide:
+    extends: oxide
+    profile: final
+    width: 384
+    height: 216
+  transparent-amber:
+    extends: amber
+    profile: transparent
+    width: 384
+    height: 384
+matrices:
+  delivery:
+    variants: [square-amber, vertical-ivory, landscape-oxide]
+    profiles: [final]
+    concurrency: 1
+  multi-profile:
+    variants: [square-amber]
+    profiles: [final, transparent]
+    concurrency: 1
+outputs:
+  - id: square-film
+    variant: square-amber
+    profile: final
+    type: video
+    codec: h264
+    finalHoldSeconds: 0.25
+    path: output/brand-ident-square.mp4
+  - id: square-master
+    variant: square-amber
+    profile: final
+    type: video
+    codec: prores
+    finalHoldSeconds: 0.25
+    path: output/brand-ident-square-master.mov
+  - id: vertical-film
+    variant: vertical-ivory
+    profile: final
+    type: video
+    codec: h264
+    finalHoldSeconds: 0.25
+    path: output/brand-ident-vertical.mp4
+  - id: landscape-film
+    variant: landscape-oxide
+    profile: final
+    type: video
+    codec: h264
+    finalHoldSeconds: 0.25
+    path: output/brand-ident-landscape.mp4
+  - id: transparent-mark
+    variant: transparent-amber
+    profile: transparent
+    type: still
+    frame: 24
+    alpha: true
+    path: output/brand-ident-transparent.png
+  - id: amber-preview-reel
+    variant: amber
+    profile: preview
+    type: preview-video
+    codec: h264
+    frameRate: 6
+    view: hero
+    mode: material
+    path: output/brand-ident-preview.mp4
+libraries:
+  - id: brand-rig
+    version: 1.0.0
+    path: libraries/brand-rig
+    checksum: 1cc738905c9ef06ceff63ce85c7277e05b821395ea8a6b006d14b30d7a131e7e
+policies:
+  promote: []
+  suppress: []
+  requireAppliedScale: false
+  requireClosedMeshes: false
+  requireStableNames: true
+resources:
+  maxProcesses: 1
+  maxMemoryMB: 4096
+  maxDiskBytes: 1073741824
+  maxResolutionPixels: 1000000
+  maxSamples: 128
+  maxFrames: 240
+  maxTriangles: 500000
+  maxObjects: 200
+  maxTextureBytes: 268435456
+  timeoutSeconds: 180
+  thermalAdvisory: true
+searches:
+  lighting:
+    baseVariant: amber
+    parameters:
+      lightEnergy: [650, 900, 1150]
+      cameraLift: [-0.08, 0.0, 0.08]
+    budget: 6
+    profile: preview
+    view: hero
+    scores:
+      - id: mobile-coverage
+        metric: coverage
+        direction: target
+        target: 0.35
+        weight: 2
+      - id: render-cost
+        metric: renderSeconds
+        direction: minimize
+        weight: 1
+nondeterminism: []

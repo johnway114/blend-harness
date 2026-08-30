@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "project": "procedural-explainer",
+  "inspection": {
+    "requiredObjects": ["bar-reuse", "bar-fiber", "bar-energy", "label-reuse", "label-fiber", "label-energy", "title", "hero"],
+    "minimumObjects": 10,
+    "minimumTriangles": 30,
+    "requiredCameras": ["hero"]
+  },
+  "validation": {
+    "profile": "final",
+    "variant": "revision-a",
+    "passed": true,
+    "requiredRuleIds": []
+  },
+  "outputs": [
+    "output/explainer-revision-a.mp4",
+    "output/explainer-revision-b.mp4"
+  ],
+  "commands": [
+    "blend build . --trust",
+    "blend preview . --profile preview --variant revision-a --trust",
+    "blend inspect . --profile final --variant revision-a --trust",
+    "blend validate . --profile final --variant revision-a --trust",
+    "blend render . --matrix data-revisions --trust",
+    "blend encode .",
+    "blend compare previews/revision-a previews/revision-b"
+  ],
+  "visualBaseline": "references/baselines/contact-sheet.png"
+}

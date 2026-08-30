@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "title": "Empty source-authored Blender project",
+  "purpose": "Minimal configuration and runtime contract without an imposed aesthetic",
+  "creativeDirection": [],
+  "avoid": ["undocumented GUI state", "undeclared assets"],
+  "deliverables": ["source-authored scene to be supplied"],
+  "acceptance": ["project source explicitly defines every renderable object and camera"],
+  "mechanicalAcceptance": [],
+  "constraints": ["Replace build_scene with intentional project source before rendering"]
+}

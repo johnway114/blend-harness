@@ -1,0 +1,4 @@
+blend validate-config . --json
+blend trust . --json
+blend build . --trust --json
+# Add intentional objects and cameras before preview or final validation.

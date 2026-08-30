@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "blend-harness"
+version = "1.0.0"
+description = "Agent-native, source-controlled Blender compiler and rendering harness"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Blend contributors" }]
+dependencies = [
+  "jsonschema==4.26.0",
+  "Pillow==12.3.0",
+  "PyYAML==6.0.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+blend = "blend_harness.cli:main"
+blend-mcp = "blend_harness.mcp_server:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["blend_harness*", "blend_runtime*"]
+
+[tool.setuptools.package-data]
+blend_harness = [
+  "schemas/*.json",
+  "templates/**/*",
+  "compatibility.json",
+]
+
+[tool.setuptools.exclude-package-data]
+blend_harness = [
+  "templates/**/__pycache__/*",
+  "templates/**/*.pyc",
+  "templates/**/.pytest_cache/*",
+  "templates/**/build/*",
+  "templates/**/previews/*",
+  "templates/**/renders/*",
+  "templates/**/output/*",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+  "blender: requires a real supported Blender executable",
+  "ffmpeg: requires FFmpeg and FFprobe",
+  "slow: exercises complete end-to-end fixtures",
+]

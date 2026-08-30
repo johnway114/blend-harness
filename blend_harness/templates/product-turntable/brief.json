@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "title": "Imported product turntable",
+  "purpose": "Acceptance fixture for model import, dimensional validation, rendering, and model delivery",
+  "durationSeconds": 1,
+  "creativeDirection": [
+    "quiet seamless studio",
+    "clear silhouette",
+    "honest material response",
+    "measured complete rotation"
+  ],
+  "avoid": ["floating product", "crushed shadows", "decorative clutter", "unstable scale"],
+  "deliverables": ["hero still", "turntable animation", "web and interchange model exports"],
+  "acceptance": [
+    "product reads clearly at thumbnail size",
+    "rotation exposes every side without camera collision",
+    "exported geometry contains only declared product objects"
+  ],
+  "mechanicalAcceptance": [
+    {"id": "duration", "measurement": "durationSeconds", "operator": "gte", "value": 1},
+    {"id": "mesh-count", "measurement": "exportMeshCount", "operator": "gte", "value": 1}
+  ],
+  "constraints": ["Import the declared OBJ source", "Preserve one metre scene units", "Do not export cameras, lights, or backdrop"]
+}

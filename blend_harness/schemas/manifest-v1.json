@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blend.local/schemas/manifest-v1.json",
+  "title": "Blend artifact manifest",
+  "type": "object",
+  "required": ["schema", "blendVersion", "operation", "operationId", "project", "host", "inputs", "resolved", "timing", "status", "outputs"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": 1},
+    "kind": {"type": "string"},
+    "blendVersion": {"type": "string"},
+    "runtimeVersion": {"type": "string"},
+    "operation": {"type": "string"},
+    "operationId": {"type": "string"},
+    "project": {
+      "type": "object",
+      "required": ["id", "root"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {"type": "string"},
+        "root": {"type": "string"},
+        "sourceRevision": {"type": ["string", "null"]}
+      }
+    },
+    "host": {"type": "object", "additionalProperties": {"type": ["string", "number", "boolean", "null"]}},
+    "blender": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "executable": {"type": "string"},
+        "version": {"type": "string"}
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "required": ["dependencyHash", "files"],
+      "additionalProperties": true,
+      "properties": {
+        "dependencyHash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "files": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "resolved": {"type": "object", "additionalProperties": true},
+    "timing": {
+      "type": "object",
+      "required": ["startedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "startedAt": {"type": "string"},
+        "endedAt": {"type": "string"},
+        "durationSeconds": {"type": "number", "minimum": 0}
+      }
+    },
+    "status": {"enum": ["running", "succeeded", "failed", "interrupted", "partial"]},
+    "exitStatus": {"type": ["integer", "null"]},
+    "expectedFrames": {"type": "array", "items": {"type": "integer"}},
+    "completedFrames": {"type": "array", "items": {"type": "integer"}},
+    "frames": {"type": "array", "items": {"type": "object"}},
+    "outputs": {"type": "array", "items": {"type": "object"}},
+    "validation": {"type": "object", "additionalProperties": true},
+    "nondeterminism": {"type": "array", "items": {"type": "object"}},
+    "warnings": {"type": "array", "items": {"type": ["string", "object"]}},
+    "overrides": {"type": "array", "items": {"type": "object"}},
+    "error": {"type": "object"},
+    "parentManifests": {"type": "array", "items": {"type": "object"}}
+  }
+}

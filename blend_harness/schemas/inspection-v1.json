@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blend.local/schemas/inspection-v1.json",
+  "title": "Blend scene inspection",
+  "type": "object",
+  "required": ["schema", "scene", "scenes", "collections", "objects", "cameras", "lights", "materials", "images", "fonts", "animation", "dependencies", "statistics", "render", "colorManagement", "extensions"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": {"const": 1},
+    "scene": {"type": "object"},
+    "scenes": {"type": "array", "items": {"type": "object"}},
+    "collections": {"type": "array", "items": {"type": "object"}},
+    "objects": {"type": "array", "items": {"type": "object"}},
+    "cameras": {"type": "array", "items": {"type": "object"}},
+    "lights": {"type": "array", "items": {"type": "object"}},
+    "materials": {"type": "array", "items": {"type": "object"}},
+    "images": {"type": "array", "items": {"type": "object"}},
+    "fonts": {"type": "array", "items": {"type": "object"}},
+    "animation": {"type": "array", "items": {"type": "object"}},
+    "drivers": {"type": "array", "items": {"type": "object"}},
+    "constraints": {"type": "array", "items": {"type": "object"}},
+    "simulations": {"type": "array", "items": {"type": "object"}},
+    "dependencies": {"type": "array", "items": {"type": "object"}},
+    "compositor": {"type": "object"},
+    "statistics": {"type": "object"},
+    "render": {"type": "object"},
+    "colorManagement": {"type": "object"},
+    "estimatedOutput": {"type": "object"},
+    "extensions": {"type": "object"}
+  }
+}
