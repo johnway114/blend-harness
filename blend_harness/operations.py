@@ -1013,8 +1013,8 @@ def encode(supervisor: ProcessSupervisor, project_path: Path, *, operation_id: s
                     log_root=project.paths.logs,
                     operation_id=op_id,
                     expected={
-                        "width": profile_value["width"],
-                        "height": profile_value["height"],
+                        "width": profile_value["width"] * max(1, int(output.get("pixelUpscale", 1) or 1)),
+                        "height": profile_value["height"] * max(1, int(output.get("pixelUpscale", 1) or 1)),
                         "frameRate": float(output.get("frameRate", 6)),
                         "frameCount": len(preview_records),
                         "timeoutSeconds": project.config.get("resources", {}).get("timeoutSeconds"),
@@ -1223,8 +1223,8 @@ def encode(supervisor: ProcessSupervisor, project_path: Path, *, operation_id: s
                     log_root=project.paths.logs,
                     operation_id=op_id,
                     expected={
-                        "width": profile_value["width"],
-                        "height": profile_value["height"],
+                        "width": profile_value["width"] * max(1, int(resolved_output.get("pixelUpscale", 1) or 1)),
+                        "height": profile_value["height"] * max(1, int(resolved_output.get("pixelUpscale", 1) or 1)),
                         "frameRate": project.config["project"]["frameRate"],
                         "frameCount": len(target_frames),
                         "timeoutSeconds": project.config.get("resources", {}).get("timeoutSeconds"),

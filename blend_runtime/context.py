@@ -162,9 +162,17 @@ class ProjectContext:
             if key in color:
                 try:
                     setattr(owner, attr, color[key])
-                except (TypeError, ValueError):
-                    # Host validation reports unsupported color-management values.
-                    pass
+                except (TypeError, ValueError) as exc:
+                    valid = ""
+                    try:
+                        items = owner.bl_rna.properties[attr].enum_items
+                        valid = " Valid identifiers: " + ", ".join(repr(i.identifier) for i in items) + "."
+                    except Exception:
+                        pass
+                    raise RuntimeError(
+                        f"colorManagement.{key}={color[key]!r} is not accepted by this Blender build."
+                        f"{valid} Silently falling back would render with the wrong transfer."
+                    ) from exc
         self.apply_profile()
 
     def apply_profile(self) -> None:

@@ -154,7 +154,14 @@ def _apply_policy(project: Project, findings: list[dict[str, Any]], *, profile: 
             finding["originalSeverity"] = finding["severity"]
             finding["severity"] = "error"
         for suppression in suppressions:
-            if suppression["rule"] == finding["ruleId"] and suppression["scope"] in active_scopes:
+            # A suppression may target the run (project/profile/variant) or the
+            # finding's own scope, e.g. "view:hero" or "object:headland". Without
+            # the latter the only way to silence one view is to silence the rule
+            # across the whole project, which is strictly worse.
+            if suppression["rule"] == finding["ruleId"] and (
+                suppression["scope"] in active_scopes
+                or suppression["scope"] == finding["scope"]
+            ):
                 finding["suppressed"] = True
                 finding["suppressionReason"] = suppression["reason"]
                 break

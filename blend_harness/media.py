@@ -264,6 +264,11 @@ def encode_sequence(supervisor: ProcessSupervisor, *, frame_pattern: Path, frame
     if audio:
         args.extend(["-protocol_whitelist", "file,pipe", "-i", str(audio)])
     filters: list[str] = []
+    upscale = int(output.get("pixelUpscale", 0) or 0)
+    if upscale > 1:
+        # Nearest-neighbour block scaling for pixel-art sources. Applied before
+        # tpad/fade so those operate on the delivered resolution.
+        filters.append(f"scale=iw*{upscale}:ih*{upscale}:flags=neighbor")
     final_hold = float(output.get("finalHoldSeconds", 0))
     if final_hold:
         filters.append(f"tpad=stop_mode=clone:stop_duration={final_hold}")

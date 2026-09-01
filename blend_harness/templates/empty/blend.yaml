@@ -20,7 +20,7 @@ project:
   colorManagement:
     display: sRGB
     view: AgX
-    look: Medium High Contrast
+    look: AgX - Medium High Contrast
 profiles:
   preview:
     engine: BLENDER_EEVEE_NEXT

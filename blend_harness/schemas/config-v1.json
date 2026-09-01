@@ -268,7 +268,8 @@
         "fadeInSeconds": {"type": "number", "minimum": 0},
         "fadeOutSeconds": {"type": "number", "minimum": 0},
         "finalHoldSeconds": {"type": "number", "minimum": 0},
-        "alpha": {"type": "boolean"}
+        "alpha": {"type": "boolean"},
+        "pixelUpscale": {"type": "integer", "minimum": 2, "maximum": 16}
       }
     },
     "export": {
